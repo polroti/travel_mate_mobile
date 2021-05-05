@@ -1,6 +1,6 @@
-# travel_mate_mobile
+# Travel Mate - Mobile client
 
-A new Flutter project.
+The mobile client for Travel Mate
 
 ## Getting Started
 
