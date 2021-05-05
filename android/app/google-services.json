@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "688208345269",
+    "project_id": "travel-mate-59d37",
+    "storage_bucket": "travel-mate-59d37.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:688208345269:android:4c901c934e0644511aa6fc",
+        "android_client_info": {
+          "package_name": "com.manobran.travel_mate_mobile"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "688208345269-p4071aoi33ke4nmu6o304h8ovj16gvi6.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.manobran.travel_mate_mobile",
+            "certificate_hash": "5f6576a67dda4e12d42a3cd83dc5ab3c072dd068"
+          }
+        },
+        {
+          "client_id": "688208345269-dhriuqecn2mtbcc9ets9pptqlqktkp96.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDTTpHw4GAFADzu1c9U7s2BSQjOIg07oFQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "688208345269-dhriuqecn2mtbcc9ets9pptqlqktkp96.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
