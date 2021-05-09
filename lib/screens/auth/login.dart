@@ -182,7 +182,7 @@ class _LoginPageState extends State<LoginPage> {
             SizedBox(
               height: 350,
             ),
-            Text("New here?"),
+            Text("Don't have an account?"),
             SizedBox(
               height: 15,
             ),

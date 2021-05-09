@@ -194,7 +194,7 @@ class _RegisterPageState extends State<RegisterPage> {
               SizedBox(
                 height: 250,
               ),
-              Text("Already ingaya?"),
+              Text("Have an account?"),
               _secondaryButton()
             ],
           ),
