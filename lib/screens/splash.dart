@@ -18,7 +18,11 @@ class _SplashPageState extends State<SplashPage> {
     super.initState();
     _firebaseAuth.authStateChanges().listen((User user) {
       if (user == null) {
+        print(user);
         Navigator.pushReplacementNamed(context, '/login');
+      } else {
+        print(user);
+        Navigator.pushReplacementNamed(context, '/home');
       }
     });
   }

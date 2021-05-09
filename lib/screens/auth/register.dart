@@ -33,19 +33,172 @@ class _RegisterPageState extends State<RegisterPage> {
     Pattern pattern =
         r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
     RegExp regex = new RegExp(pattern);
-    if (!regex.hasMatch(value)) {
-      return "Invalid Email";
+    if (value != "") {
+      if (!regex.hasMatch(value)) {
+        return "INVALID EMAIL";
+      } else {
+        return null;
+      }
     } else {
-      return null;
+      return "Please enter the email address";
     }
   }
 
   String pwdValidator(String value) {
-    if (value.length < 8) {
-      return "Weak Password";
+    if (value != "") {
+      if (value.length < 8) {
+        return "Your password should be greater than 08 characters";
+      } else {
+        return null;
+      }
     } else {
-      return null;
+      return "Please enter a password";
     }
+  }
+
+  Widget _textInputFirstName() {
+    return TextFormField(
+      decoration: InputDecoration(
+        border: OutlineInputBorder(),
+        labelText: "FirstName",
+        hintText: "FirstName",
+      ),
+      controller: firstNameInputController,
+      validator: (value) {
+        if (value.length < 3) {
+          return "Invalid FirstName";
+        }
+        return "";
+      },
+    );
+  }
+
+  Widget _textInputLastName() {
+    return TextFormField(
+        decoration: InputDecoration(
+          border: OutlineInputBorder(),
+          labelText: "Last Name",
+          hintText: "Last Name",
+        ),
+        controller: lastNameInputController,
+        validator: (value) {
+          if (value.length < 3) {
+            return "invalid Last Name";
+          }
+          return "";
+        });
+  }
+
+  Widget _textInputEmail() {
+    return TextFormField(
+      keyboardAppearance: Brightness.dark,
+      decoration: InputDecoration(
+          border: OutlineInputBorder(),
+          labelText: "Email ",
+          hintText: "Email "),
+      controller: emailInputController,
+      keyboardType: TextInputType.emailAddress,
+      validator: emailValidator,
+    );
+  }
+
+  Widget _textInputPassword() {
+    return TextFormField(
+      decoration: InputDecoration(
+        border: OutlineInputBorder(),
+        labelText: "Password",
+        hintText: "Password",
+      ),
+      controller: pwdInputController,
+      obscureText: true,
+      validator: pwdValidator,
+    );
+  }
+
+  Widget _textInputConfirmPassword() {
+    return TextFormField(
+      decoration: InputDecoration(
+        border: OutlineInputBorder(),
+        labelText: "Confirm Password",
+        hintText: "Confirm Password",
+      ),
+      controller: confirmPwdInputController,
+      obscureText: true,
+      validator: pwdValidator,
+    );
+  }
+
+  Widget _primaryButton() {
+    return ElevatedButton(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Text(
+              "REGISTER",
+            ),
+          ],
+        ),
+        style: ElevatedButton.styleFrom(elevation: 5),
+        onPressed: () {});
+  }
+
+  Widget _secondaryButton() {
+    return OutlinedButton(
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          Text(
+            "LOG BACK IN",
+          ),
+        ],
+      ),
+      style: OutlinedButton.styleFrom(
+        side:
+            BorderSide(color: Theme.of(context).colorScheme.primary, width: 2),
+      ),
+      onPressed: () {
+        Navigator.pop(context);
+      },
+    );
+  }
+
+  Widget _body() {
+    return Container(
+        padding: const EdgeInsets.all(20.0),
+        child: SingleChildScrollView(
+            child: Form(
+          key: _registerFormKey,
+          child: Column(
+            children: <Widget>[
+              _textInputFirstName(),
+              SizedBox(
+                height: 10,
+              ),
+              _textInputLastName(),
+              SizedBox(
+                height: 10,
+              ),
+              _textInputEmail(),
+              SizedBox(
+                height: 10,
+              ),
+              _textInputPassword(),
+              SizedBox(
+                height: 10,
+              ),
+              _textInputConfirmPassword(),
+              SizedBox(
+                height: 10,
+              ),
+              _primaryButton(),
+              SizedBox(
+                height: 250,
+              ),
+              Text("Already ingaya?"),
+              _secondaryButton()
+            ],
+          ),
+        )));
   }
 
   @override
@@ -54,92 +207,6 @@ class _RegisterPageState extends State<RegisterPage> {
         appBar: AppBar(
           title: Text("Register"),
         ),
-        body: Container(
-            padding: const EdgeInsets.all(20.0),
-            child: SingleChildScrollView(
-                child: Form(
-              key: _registerFormKey,
-              child: Column(
-                children: <Widget>[
-                  TextFormField(
-                    decoration: InputDecoration(
-                      labelText: "FirstName",
-                      hintText: "FirstName",
-                    ),
-                    controller: firstNameInputController,
-                    validator: (value) {
-                      if (value.length < 3) {
-                        return "Invalid FirstName";
-                      }
-                    },
-                  ),
-                  TextFormField(
-                      decoration: InputDecoration(
-                        labelText: "Last Name",
-                        hintText: "Last Name",
-                      ),
-                      controller: lastNameInputController,
-                      validator: (value) {
-                        if (value.length < 3) {
-                          return "invalid Last Name";
-                        }
-                      }),
-                  TextFormField(
-                    decoration: InputDecoration(
-                      labelText: "Email",
-                      hintText: "Email",
-                    ),
-                    controller: emailInputController,
-                    keyboardType: TextInputType.emailAddress,
-                    validator: emailValidator,
-                  ),
-                  TextFormField(
-                    decoration: InputDecoration(
-                      labelText: "Password",
-                      hintText: "Password",
-                    ),
-                    controller: pwdInputController,
-                    obscureText: true,
-                    validator: pwdValidator,
-                  ),
-                  TextFormField(
-                    decoration: InputDecoration(
-                      labelText: "Confirm Password",
-                      hintText: "Confirm Password",
-                    ),
-                    controller: confirmPwdInputController,
-                    obscureText: true,
-                    validator: pwdValidator,
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  RaisedButton(
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(19)),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          Text("Join"),
-                          Icon(Icons.arrow_forward),
-                        ],
-                      ),
-                      color: Theme.of(context).primaryColor,
-                      textColor: Colors.white,
-                      onPressed: () {}),
-                  Text("Already ingaya?"),
-                  RaisedButton(
-                    textColor: Theme.of(context).primaryColor,
-                    color: Colors.white,
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(19)),
-                    child: Text("login awame"),
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                  )
-                ],
-              ),
-            ))));
+        body: _body());
   }
 }
