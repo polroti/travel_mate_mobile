@@ -68,7 +68,7 @@ class _RegisterPageState extends State<RegisterPage> {
         if (value.length < 3) {
           return "Invalid FirstName";
         }
-        return "";
+        return null;
       },
     );
   }
@@ -85,7 +85,7 @@ class _RegisterPageState extends State<RegisterPage> {
           if (value.length < 3) {
             return "invalid Last Name";
           }
-          return "";
+          return null;
         });
   }
 
@@ -139,7 +139,39 @@ class _RegisterPageState extends State<RegisterPage> {
           ],
         ),
         style: ElevatedButton.styleFrom(elevation: 5),
-        onPressed: () {});
+        onPressed: () {
+          if (_registerFormKey.currentState.validate()) {
+            if (pwdInputController.text == confirmPwdInputController.text) {
+              FirebaseAuth.instance
+                  .createUserWithEmailAndPassword(
+                      email: emailInputController.text,
+                      password: pwdInputController.text)
+                  .then((currentUser) => FirebaseFirestore.instance
+                      .collection("users")
+                      .doc(currentUser.user.uid)
+                      .set({
+                        "uid": currentUser.user.uid,
+                        "fname": firstNameInputController.text,
+                        "surname": lastNameInputController.text,
+                        "email": emailInputController.text,
+                      })
+                      .then((result) => {
+                            Navigator.pushAndRemoveUntil(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => HomePage()),
+                                (_) => false),
+                            firstNameInputController.clear(),
+                            lastNameInputController.clear(),
+                            emailInputController.clear(),
+                            pwdInputController.clear(),
+                            confirmPwdInputController.clear()
+                          })
+                      .catchError((err) => print(err)))
+                  .catchError((err) => print(err));
+            }
+          }
+        });
   }
 
   Widget _secondaryButton() {

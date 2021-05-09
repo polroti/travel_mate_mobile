@@ -90,8 +90,8 @@ class _LoginPageState extends State<LoginPage> {
 
   Widget circularProgressBar() {
     if (this._isLogginIn) {
-      return Center(
-        child: CircularProgressIndicator(),
+      return CircularProgressIndicator(
+        strokeWidth: 2,
       );
     }
     return Container(
@@ -114,9 +114,9 @@ class _LoginPageState extends State<LoginPage> {
       onPressed: () async {
         if (_loginFormKey.currentState.validate()) {
           //await pr.show();
-          setState(() {
-            _isLogginIn = true;
-          });
+          //  setState(() {
+          this._isLogginIn = true;
+          //    });
           await FirebaseAuth.instance
               .signInWithEmailAndPassword(
                   email: emailInputController.text,
@@ -131,9 +131,9 @@ class _LoginPageState extends State<LoginPage> {
                   .catchError((err) => print(err)))
               .catchError((err) {});
 
-          setState(() {
-            _isLogginIn = false;
-          });
+          // setState(() {
+          this._isLogginIn = false;
+          // });
         }
       },
     );
@@ -145,7 +145,7 @@ class _LoginPageState extends State<LoginPage> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           Text(
-            "REGISER",
+            "REGISTER",
           ),
         ],
       ),
