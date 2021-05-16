@@ -129,7 +129,56 @@ class _LoginPageState extends State<LoginPage> {
                       context,
                       MaterialPageRoute(builder: (context) => HomePage())))
                   .catchError((err) => print(err)))
-              .catchError((err) {});
+              .catchError((error) {
+            print("==============================");
+            print("Error code " + error.code);
+            print("==============================");
+            switch (error.code) {
+              case "wrong-password":
+                final snackBar = SnackBar(
+                  content: Text('password pila da mayiru'),
+                  action: SnackBarAction(
+                    label: 'Undo',
+                    onPressed: () {
+                      // Some code to undo the change.
+                    },
+                  ),
+                );
+
+                // Find the ScaffoldMessenger in the widget tree
+                // and use it to show a SnackBar.
+                ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                break;
+              case "too-many-requests":
+                final snackBar2 = SnackBar(
+                  content: Text('konjam porumaya iru da'),
+                  action: SnackBarAction(
+                    label: 'Sari',
+                    onPressed: () {
+                      // Some code to undo the change.
+                    },
+                  ),
+                );
+                ScaffoldMessenger.of(context).showSnackBar(snackBar2);
+                break;
+
+              default:
+                final snackBar = SnackBar(
+                  content: Text('Unknown auth error'),
+                  action: SnackBarAction(
+                    label: 'Ela',
+                    onPressed: () {
+                      // Some code to undo the change.
+                    },
+                  ),
+                );
+
+                // Find the ScaffoldMessenger in the widget tree
+                // and use it to show a SnackBar.
+                ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                break;
+            }
+          });
 
           // setState(() {
           this._isLogginIn = false;

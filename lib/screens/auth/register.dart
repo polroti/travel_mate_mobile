@@ -168,7 +168,45 @@ class _RegisterPageState extends State<RegisterPage> {
                             confirmPwdInputController.clear()
                           })
                       .catchError((err) => print(err)))
-                  .catchError((err) => print(err));
+                  .catchError((error) {
+                print("==============================");
+                print("Error code " + error.code);
+                print("============================== email-already-in-use");
+
+                switch (error.code) {
+                  case "email-already-in-use":
+                    final snackBar = SnackBar(
+                      content: Text('already oruthan irukan...'),
+                      action: SnackBarAction(
+                        label: 'Undo',
+                        onPressed: () {
+                          // Some code to undo the change.
+                        },
+                      ),
+                    );
+
+                    // Find the ScaffoldMessenger in the widget tree
+                    // and use it to show a SnackBar.
+                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                    break;
+
+                  default:
+                    final snackBar = SnackBar(
+                      content: Text('Unknown auth error'),
+                      action: SnackBarAction(
+                        label: 'Ela',
+                        onPressed: () {
+                          // Some code to undo the change.
+                        },
+                      ),
+                    );
+
+                    // Find the ScaffoldMessenger in the widget tree
+                    // and use it to show a SnackBar.
+                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                    break;
+                }
+              });
             }
           }
         });
