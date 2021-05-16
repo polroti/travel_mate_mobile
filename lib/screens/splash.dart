@@ -1,6 +1,8 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:qr_flutter/qr_flutter.dart';
+//import 'package:qr_flutter/qr_flutter.dart';
 
 class SplashPage extends StatefulWidget {
   SplashPage({Key key}) : super(key: key);
@@ -10,22 +12,26 @@ class SplashPage extends StatefulWidget {
 }
 
 class _SplashPageState extends State<SplashPage> {
+  final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+  @override
+  void initState() {
+    super.initState();
+    _firebaseAuth.authStateChanges().listen((User user) {
+      if (user == null) {
+        print(user);
+        Navigator.pushReplacementNamed(context, '/login');
+      } else {
+        print(user);
+        Navigator.pushReplacementNamed(context, '/home');
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: Container(
-          //     child: CircularProgressIndicator(
-          //   valueColor: AlwaysStoppedAnimation(Colors.green),
-          //   // backgroundColor: Colors.red,
-          //   strokeWidth: 1.25,
-          // )
-          child: QrImage(
-            data: "noice",
-            version: 2,
-            size: 400.0,
-          ),
-        ),
+        child: Container(child: CircularProgressIndicator()),
       ),
     );
   }
