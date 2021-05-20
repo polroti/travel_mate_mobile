@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:travel_mate_mobile/constants/RegExp.dart';
+import 'package:travel_mate_mobile/constants/TextInputConstants.dart';
 
 import 'package:travel_mate_mobile/screens/home/home.dart';
 
@@ -30,29 +32,28 @@ class _RegisterPageState extends State<RegisterPage> {
   }
 
   String emailValidator(String value) {
-    Pattern pattern =
-        r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
+    Pattern pattern = EmailRegExp.REGEX;
     RegExp regex = new RegExp(pattern);
     if (value != "") {
       if (!regex.hasMatch(value)) {
-        return "INVALID EMAIL";
+        return ValidatorErrors.INVALID_EMAIL;
       } else {
         return null;
       }
     } else {
-      return "Please enter the email address";
+      return ValidatorErrors.EMPTY_EMAIL;
     }
   }
 
   String pwdValidator(String value) {
     if (value != "") {
       if (value.length < 8) {
-        return "Your password should be greater than 08 characters";
+        return ValidatorErrors.WEAK_PASSWORD;
       } else {
         return null;
       }
     } else {
-      return "Please enter a password";
+      return ValidatorErrors.EMPTY_PASSWORD;
     }
   }
 
