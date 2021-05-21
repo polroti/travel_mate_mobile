@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:travel_mate_mobile/constants/ButtonConstants.dart';
+import 'package:travel_mate_mobile/constants/LabelConstants.dart';
 import 'package:travel_mate_mobile/constants/RegExp.dart';
 import 'package:travel_mate_mobile/constants/TextInputConstants.dart';
 
@@ -61,13 +63,13 @@ class _RegisterPageState extends State<RegisterPage> {
     return TextFormField(
       decoration: InputDecoration(
         border: OutlineInputBorder(),
-        labelText: "FirstName",
-        hintText: "FirstName",
+        labelText: Labels.LABEL_FIRST_NAME,
+        hintText: Hints.FIRST_NAME,
       ),
       controller: firstNameInputController,
       validator: (value) {
-        if (value.length < 3) {
-          return "Invalid FirstName";
+        if (value.length < 2) {
+          return ValidatorErrors.WEAK_FIRST_NAME;
         }
         return null;
       },
@@ -78,13 +80,13 @@ class _RegisterPageState extends State<RegisterPage> {
     return TextFormField(
         decoration: InputDecoration(
           border: OutlineInputBorder(),
-          labelText: "Last Name",
-          hintText: "Last Name",
+          labelText: Labels.LABEL_LAST_NAME,
+          hintText: Hints.LAST_NAME,
         ),
         controller: lastNameInputController,
         validator: (value) {
           if (value.length < 3) {
-            return "invalid Last Name";
+            return ValidatorErrors.WEAK_LAST_NAME;
           }
           return null;
         });
@@ -95,8 +97,8 @@ class _RegisterPageState extends State<RegisterPage> {
       keyboardAppearance: Brightness.dark,
       decoration: InputDecoration(
           border: OutlineInputBorder(),
-          labelText: "Email ",
-          hintText: "Email "),
+          labelText: Labels.LABEL_EMAIL,
+          hintText: Hints.EMAIL),
       controller: emailInputController,
       keyboardType: TextInputType.emailAddress,
       validator: emailValidator,
@@ -107,8 +109,8 @@ class _RegisterPageState extends State<RegisterPage> {
     return TextFormField(
       decoration: InputDecoration(
         border: OutlineInputBorder(),
-        labelText: "Password",
-        hintText: "Password",
+        labelText: Labels.LABEL_PASSWORD,
+        hintText: Hints.PASSWORD,
       ),
       controller: pwdInputController,
       obscureText: true,
@@ -120,8 +122,8 @@ class _RegisterPageState extends State<RegisterPage> {
     return TextFormField(
       decoration: InputDecoration(
         border: OutlineInputBorder(),
-        labelText: "Confirm Password",
-        hintText: "Confirm Password",
+        labelText: Labels.LABEL_CONFIRM_PASSWORD,
+        hintText: Hints.PASSWORD,
       ),
       controller: confirmPwdInputController,
       obscureText: true,
@@ -134,9 +136,7 @@ class _RegisterPageState extends State<RegisterPage> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Text(
-              "REGISTER",
-            ),
+            Text(""),
           ],
         ),
         style: ElevatedButton.styleFrom(elevation: 5),
