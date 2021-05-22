@@ -2,6 +2,14 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:travel_mate_mobile/constants/AppBarTitleConstants.dart';
+import 'package:travel_mate_mobile/constants/ButtonConstants.dart';
+import 'package:travel_mate_mobile/constants/ErrorConstants.dart';
+import 'package:travel_mate_mobile/constants/FirebaseConstants.dart';
+import 'package:travel_mate_mobile/constants/LabelConstants.dart';
+import 'package:travel_mate_mobile/constants/PathConstants.dart';
+import 'package:travel_mate_mobile/constants/RegExp.dart';
+import 'package:travel_mate_mobile/constants/TextInputConstants.dart';
 import 'package:travel_mate_mobile/screens/home/home.dart';
 
 class LoginPage extends StatefulWidget {
@@ -30,35 +38,34 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   String emailValidator(String value) {
-    Pattern pattern =
-        r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
+    Pattern pattern = EmailRegExp.REGEX;
     RegExp regex = new RegExp(pattern);
     if (value != "") {
       if (!regex.hasMatch(value)) {
-        return "INVALID EMAIL";
+        return ValidatorErrors.INVALID_EMAIL;
       } else {
         return null;
       }
     } else {
-      return "Please enter the email address";
+      return ValidatorErrors.EMPTY_EMAIL;
     }
   }
 
   String pwdValidator(String value) {
     if (value != "") {
       if (value.length < 8) {
-        return "Your password should be greater than 08 characters";
+        return ValidatorErrors.WEAK_PASSWORD;
       } else {
         return null;
       }
     } else {
-      return "Please enter a password";
+      return ValidatorErrors.EMPTY_PASSWORD;
     }
   }
 
   Widget customAppBar() {
     return AppBar(
-      title: Text("Login"),
+      title: Text(AppBarTitles.APPBAR_TITLE_LOGIN),
     );
   }
 
@@ -67,8 +74,8 @@ class _LoginPageState extends State<LoginPage> {
       keyboardAppearance: Brightness.dark,
       decoration: InputDecoration(
           border: OutlineInputBorder(),
-          labelText: "Email ",
-          hintText: "Email "),
+          labelText: Labels.LABEL_EMAIL,
+          hintText: Hints.EMAIL),
       controller: emailInputController,
       keyboardType: TextInputType.emailAddress,
       validator: emailValidator,
@@ -79,8 +86,8 @@ class _LoginPageState extends State<LoginPage> {
     return TextFormField(
       decoration: InputDecoration(
         border: OutlineInputBorder(),
-        labelText: "Password",
-        hintText: "Password",
+        labelText: Labels.LABEL_PASSWORD,
+        hintText: Hints.PASSWORD,
       ),
       controller: pwdInputController,
       obscureText: true,
@@ -106,7 +113,7 @@ class _LoginPageState extends State<LoginPage> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           Text(
-            "LOGIN",
+            ButtonLabel.LOGIN,
           ),
         ],
       ),
@@ -134,11 +141,11 @@ class _LoginPageState extends State<LoginPage> {
             print("Error code " + error.code);
             print("==============================");
             switch (error.code) {
-              case "wrong-password":
+              case FirebaseAuthExceptions.INCORRECT_PASSWORD:
                 final snackBar = SnackBar(
-                  content: Text('password pila da mayiru'),
+                  content: Text(AuthErrors.INCORRECT_PASSWORD),
                   action: SnackBarAction(
-                    label: 'Undo',
+                    label: ButtonLabel.UNDO,
                     onPressed: () {
                       // Some code to undo the change.
                     },
@@ -149,11 +156,11 @@ class _LoginPageState extends State<LoginPage> {
                 // and use it to show a SnackBar.
                 ScaffoldMessenger.of(context).showSnackBar(snackBar);
                 break;
-              case "too-many-requests":
+              case FirebaseAuthExceptions.TOO_MANY_REQUESTS:
                 final snackBar2 = SnackBar(
-                  content: Text('konjam porumaya iru da'),
+                  content: Text(AuthErrors.TOO_MANY_REQUESTS),
                   action: SnackBarAction(
-                    label: 'Sari',
+                    label: ButtonLabel.OKAY,
                     onPressed: () {
                       // Some code to undo the change.
                     },
@@ -164,9 +171,9 @@ class _LoginPageState extends State<LoginPage> {
 
               default:
                 final snackBar = SnackBar(
-                  content: Text('Unknown auth error'),
+                  content: Text(AuthErrors.UNKNOWN_AUTH_ERROR),
                   action: SnackBarAction(
-                    label: 'Ela',
+                    label: ButtonLabel.OKAY,
                     onPressed: () {
                       // Some code to undo the change.
                     },
@@ -194,7 +201,7 @@ class _LoginPageState extends State<LoginPage> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           Text(
-            "REGISTER",
+            ButtonLabel.REGISTER,
           ),
         ],
       ),
@@ -203,7 +210,7 @@ class _LoginPageState extends State<LoginPage> {
             BorderSide(color: Theme.of(context).colorScheme.primary, width: 2),
       ),
       onPressed: () {
-        Navigator.pushNamed(context, '/register');
+        Navigator.pushNamed(context, Paths.PATH_REGISTER);
       },
     );
   }
@@ -231,7 +238,7 @@ class _LoginPageState extends State<LoginPage> {
             SizedBox(
               height: 350,
             ),
-            Text("Don't have an account?"),
+            Text(AuthLabels.CHECK_NO_ACCOUNT),
             SizedBox(
               height: 15,
             ),

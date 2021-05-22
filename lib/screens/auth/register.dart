@@ -1,6 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:travel_mate_mobile/constants/AppBarTitleConstants.dart';
+import 'package:travel_mate_mobile/constants/ButtonConstants.dart';
+import 'package:travel_mate_mobile/constants/ErrorConstants.dart';
+import 'package:travel_mate_mobile/constants/FirebaseConstants.dart';
+import 'package:travel_mate_mobile/constants/LabelConstants.dart';
+import 'package:travel_mate_mobile/constants/RegExp.dart';
+import 'package:travel_mate_mobile/constants/TextInputConstants.dart';
 
 import 'package:travel_mate_mobile/screens/home/home.dart';
 
@@ -30,29 +37,28 @@ class _RegisterPageState extends State<RegisterPage> {
   }
 
   String emailValidator(String value) {
-    Pattern pattern =
-        r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
+    Pattern pattern = EmailRegExp.REGEX;
     RegExp regex = new RegExp(pattern);
     if (value != "") {
       if (!regex.hasMatch(value)) {
-        return "INVALID EMAIL";
+        return ValidatorErrors.INVALID_EMAIL;
       } else {
         return null;
       }
     } else {
-      return "Please enter the email address";
+      return ValidatorErrors.EMPTY_EMAIL;
     }
   }
 
   String pwdValidator(String value) {
     if (value != "") {
       if (value.length < 8) {
-        return "Your password should be greater than 08 characters";
+        return ValidatorErrors.WEAK_PASSWORD;
       } else {
         return null;
       }
     } else {
-      return "Please enter a password";
+      return ValidatorErrors.EMPTY_PASSWORD;
     }
   }
 
@@ -60,13 +66,13 @@ class _RegisterPageState extends State<RegisterPage> {
     return TextFormField(
       decoration: InputDecoration(
         border: OutlineInputBorder(),
-        labelText: "FirstName",
-        hintText: "FirstName",
+        labelText: Labels.LABEL_FIRST_NAME,
+        hintText: Hints.FIRST_NAME,
       ),
       controller: firstNameInputController,
       validator: (value) {
-        if (value.length < 3) {
-          return "Invalid FirstName";
+        if (value.length < 2) {
+          return ValidatorErrors.WEAK_FIRST_NAME;
         }
         return null;
       },
@@ -77,13 +83,13 @@ class _RegisterPageState extends State<RegisterPage> {
     return TextFormField(
         decoration: InputDecoration(
           border: OutlineInputBorder(),
-          labelText: "Last Name",
-          hintText: "Last Name",
+          labelText: Labels.LABEL_LAST_NAME,
+          hintText: Hints.LAST_NAME,
         ),
         controller: lastNameInputController,
         validator: (value) {
           if (value.length < 3) {
-            return "invalid Last Name";
+            return ValidatorErrors.WEAK_LAST_NAME;
           }
           return null;
         });
@@ -94,8 +100,8 @@ class _RegisterPageState extends State<RegisterPage> {
       keyboardAppearance: Brightness.dark,
       decoration: InputDecoration(
           border: OutlineInputBorder(),
-          labelText: "Email ",
-          hintText: "Email "),
+          labelText: Labels.LABEL_EMAIL,
+          hintText: Hints.EMAIL),
       controller: emailInputController,
       keyboardType: TextInputType.emailAddress,
       validator: emailValidator,
@@ -106,8 +112,8 @@ class _RegisterPageState extends State<RegisterPage> {
     return TextFormField(
       decoration: InputDecoration(
         border: OutlineInputBorder(),
-        labelText: "Password",
-        hintText: "Password",
+        labelText: Labels.LABEL_PASSWORD,
+        hintText: Hints.PASSWORD,
       ),
       controller: pwdInputController,
       obscureText: true,
@@ -119,8 +125,8 @@ class _RegisterPageState extends State<RegisterPage> {
     return TextFormField(
       decoration: InputDecoration(
         border: OutlineInputBorder(),
-        labelText: "Confirm Password",
-        hintText: "Confirm Password",
+        labelText: Labels.LABEL_CONFIRM_PASSWORD,
+        hintText: Hints.PASSWORD,
       ),
       controller: confirmPwdInputController,
       obscureText: true,
@@ -132,11 +138,7 @@ class _RegisterPageState extends State<RegisterPage> {
     return ElevatedButton(
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              "REGISTER",
-            ),
-          ],
+          children: <Widget>[Text(ButtonLabel.REGISTER)],
         ),
         style: ElevatedButton.styleFrom(elevation: 5),
         onPressed: () {
@@ -171,14 +173,14 @@ class _RegisterPageState extends State<RegisterPage> {
                   .catchError((error) {
                 print("==============================");
                 print("Error code " + error.code);
-                print("============================== email-already-in-use");
+                print("==============================");
 
                 switch (error.code) {
-                  case "email-already-in-use":
+                  case FirebaseAuthExceptions.EMAIL_ALREADY_IN_USE:
                     final snackBar = SnackBar(
-                      content: Text('already oruthan irukan...'),
+                      content: Text(AuthErrors.EMAIL_ALREADY_IN_USE),
                       action: SnackBarAction(
-                        label: 'Undo',
+                        label: ButtonLabel.UNDO,
                         onPressed: () {
                           // Some code to undo the change.
                         },
@@ -192,9 +194,9 @@ class _RegisterPageState extends State<RegisterPage> {
 
                   default:
                     final snackBar = SnackBar(
-                      content: Text('Unknown auth error'),
+                      content: Text(AuthErrors.UNKNOWN_AUTH_ERROR),
                       action: SnackBarAction(
-                        label: 'Ela',
+                        label: ButtonLabel.OKAY,
                         onPressed: () {
                           // Some code to undo the change.
                         },
@@ -217,9 +219,7 @@ class _RegisterPageState extends State<RegisterPage> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          Text(
-            "LOG BACK IN",
-          ),
+          Text(ButtonLabel.LOG_BACK_IN),
         ],
       ),
       style: OutlinedButton.styleFrom(
@@ -262,9 +262,9 @@ class _RegisterPageState extends State<RegisterPage> {
               ),
               _primaryButton(),
               SizedBox(
-                height: 250,
+                height: 220,
               ),
-              Text("Have an account?"),
+              Text(AuthLabels.CHECK_HAVE_ACCOUNT),
               _secondaryButton()
             ],
           ),
@@ -275,7 +275,7 @@ class _RegisterPageState extends State<RegisterPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text("Register"),
+          title: Text(AppBarTitles.APPBAR_TITLE_REGISTER),
         ),
         body: _body());
   }
