@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:travel_mate_mobile/constants/AppBarTitleConstants.dart';
 import 'package:travel_mate_mobile/constants/ButtonConstants.dart';
+import 'package:travel_mate_mobile/constants/ErrorConstants.dart';
+import 'package:travel_mate_mobile/constants/FirebaseConstants.dart';
 import 'package:travel_mate_mobile/constants/LabelConstants.dart';
 import 'package:travel_mate_mobile/constants/RegExp.dart';
 import 'package:travel_mate_mobile/constants/TextInputConstants.dart';
@@ -135,9 +138,7 @@ class _RegisterPageState extends State<RegisterPage> {
     return ElevatedButton(
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(""),
-          ],
+          children: <Widget>[Text(ButtonLabel.REGISTER)],
         ),
         style: ElevatedButton.styleFrom(elevation: 5),
         onPressed: () {
@@ -172,14 +173,14 @@ class _RegisterPageState extends State<RegisterPage> {
                   .catchError((error) {
                 print("==============================");
                 print("Error code " + error.code);
-                print("============================== email-already-in-use");
+                print("==============================");
 
                 switch (error.code) {
-                  case "email-already-in-use":
+                  case FirebaseAuthExceptions.EMAIL_ALREADY_IN_USE:
                     final snackBar = SnackBar(
-                      content: Text('already oruthan irukan...'),
+                      content: Text(AuthErrors.EMAIL_ALREADY_IN_USE),
                       action: SnackBarAction(
-                        label: 'Undo',
+                        label: ButtonLabel.UNDO,
                         onPressed: () {
                           // Some code to undo the change.
                         },
@@ -193,9 +194,9 @@ class _RegisterPageState extends State<RegisterPage> {
 
                   default:
                     final snackBar = SnackBar(
-                      content: Text('Unknown auth error'),
+                      content: Text(AuthErrors.UNKNOWN_AUTH_ERROR),
                       action: SnackBarAction(
-                        label: 'Ela',
+                        label: ButtonLabel.OKAY,
                         onPressed: () {
                           // Some code to undo the change.
                         },
@@ -218,9 +219,7 @@ class _RegisterPageState extends State<RegisterPage> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          Text(
-            "LOG BACK IN",
-          ),
+          Text(ButtonLabel.LOG_BACK_IN),
         ],
       ),
       style: OutlinedButton.styleFrom(
@@ -265,7 +264,7 @@ class _RegisterPageState extends State<RegisterPage> {
               SizedBox(
                 height: 250,
               ),
-              Text("Have an account?"),
+              Text(AuthLabels.CHECK_HAVE_ACCOUNT),
               _secondaryButton()
             ],
           ),
@@ -276,7 +275,7 @@ class _RegisterPageState extends State<RegisterPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text("Register"),
+          title: Text(AppBarTitles.APPBAR_TITLE_REGISTER),
         ),
         body: _body());
   }
