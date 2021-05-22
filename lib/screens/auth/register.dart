@@ -262,7 +262,7 @@ class _RegisterPageState extends State<RegisterPage> {
               ),
               _primaryButton(),
               SizedBox(
-                height: 250,
+                height: 220,
               ),
               Text(AuthLabels.CHECK_HAVE_ACCOUNT),
               _secondaryButton()
