@@ -10,6 +10,7 @@ import 'package:travel_mate_mobile/constants/LabelConstants.dart';
 import 'package:travel_mate_mobile/constants/PathConstants.dart';
 import 'package:travel_mate_mobile/constants/RegExp.dart';
 import 'package:travel_mate_mobile/constants/TextInputConstants.dart';
+import 'package:travel_mate_mobile/screens/home/bottomNavBarContainer.dart';
 import 'package:travel_mate_mobile/screens/home/home.dart';
 
 class LoginPage extends StatefulWidget {
@@ -134,7 +135,8 @@ class _LoginPageState extends State<LoginPage> {
                   .get()
                   .then((DocumentSnapshot result) => Navigator.pushReplacement(
                       context,
-                      MaterialPageRoute(builder: (context) => HomePage())))
+                      MaterialPageRoute(
+                          builder: (context) => BottomNavigationContainer())))
                   .catchError((err) => print(err)))
               .catchError((error) {
             print("==============================");

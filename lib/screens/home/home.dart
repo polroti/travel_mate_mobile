@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:pretty_qr_code/pretty_qr_code.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({
@@ -16,7 +17,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Home"),
+        title: Text("Your Code"),
         actions: <Widget>[
           IconButton(
             icon: Icon(Icons.exit_to_app),
@@ -54,14 +55,25 @@ class _HomePageState extends State<HomePage> {
       ),
       body: Center(
           child: Container(
-        child: ElevatedButton(
-          style: ElevatedButton.styleFrom(elevation: 10),
-          child: Text('Open route'),
-          onPressed: () {
-            print("object");
-          },
-        ),
-      )),
+              padding: new EdgeInsets.all(20),
+              child: Column(
+                children: [
+                  Text(
+                    "Please do not share this code with anyone else since it will expose your personal data. Only share it when your conductor requests it.",
+                    textAlign: TextAlign.justify,
+                    style: TextStyle(color: Colors.grey.shade500),
+                  ),
+                  SizedBox(
+                    height: 50,
+                  ),
+                  PrettyQr(
+                    typeNumber: 6,
+                    data: FirebaseAuth.instance.currentUser.uid,
+                    size: 400,
+                    roundEdges: true,
+                  )
+                ],
+              ))),
     );
   }
 }
