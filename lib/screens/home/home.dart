@@ -2,6 +2,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:pretty_qr_code/pretty_qr_code.dart';
+import 'package:travel_mate_mobile/constants/AppBarTitleConstants.dart';
+import 'package:travel_mate_mobile/constants/ButtonConstants.dart';
+import 'package:travel_mate_mobile/constants/DialogConstants.dart';
+import 'package:travel_mate_mobile/constants/LabelConstants.dart';
+import 'package:travel_mate_mobile/constants/PathConstants.dart';
 import 'package:travel_mate_mobile/models/services/authServices.dart';
 
 class HomePage extends StatefulWidget {
@@ -23,7 +28,7 @@ class _HomePageState extends State<HomePage> {
             child: Column(
               children: [
                 Text(
-                  "Please do not share this code with anyone else since it will expose your personal data. Only share it when your conductor requests it.",
+                  HomeLabels.DONT_SHARE_QR_CODE,
                   textAlign: TextAlign.justify,
                   style: TextStyle(color: Colors.grey.shade500),
                 ),
@@ -31,7 +36,7 @@ class _HomePageState extends State<HomePage> {
                   height: 50,
                 ),
                 PrettyQr(
-                  typeNumber: 6,
+                  typeNumber: 3,
                   data: FirebaseAuth.instance.currentUser.uid,
                   size: 400,
                   roundEdges: true,
@@ -42,7 +47,7 @@ class _HomePageState extends State<HomePage> {
 
   Widget appBar() {
     return AppBar(
-      title: Text("Your Code"),
+      title: Text(AppBarTitles.APPBAR_TITLE_HOME),
       actions: <Widget>[
         IconButton(
           icon: Icon(Icons.exit_to_app),
@@ -50,30 +55,34 @@ class _HomePageState extends State<HomePage> {
             showDialog(
                 context: context,
                 builder: (BuildContext context) {
-                  return AlertDialog(
-                    title: Text("Sure ah?"),
-                    content: Text(
-                      "Pandithayan waakula logout pannadha aparam onaku than email password thirupi adika warum!",
-                      textAlign: TextAlign.justify,
-                    ),
-                    actions: [
-                      FlatButton(
-                        child: Text("Shape la powam"),
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                      ),
-                      FlatButton(
-                        child: Text("I'm pandithayan"),
-                        onPressed: () {
-                          authentication.signOut();
-                          Navigator.pushNamedAndRemoveUntil(
-                              context, "/login", (_) => false);
-                        },
-                      ),
-                    ],
-                  );
+                  return dialog(context);
                 });
+          },
+        ),
+      ],
+    );
+  }
+
+  Widget dialog(BuildContext context) {
+    return AlertDialog(
+      title: Text(DialogTitleConstants.LOGOUT),
+      content: Text(
+        DialogContentConstants.LOGOUT_CONFIRMATION,
+        textAlign: TextAlign.justify,
+      ),
+      actions: [
+        TextButton(
+          child: Text(ButtonLabel.CANCEL),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
+        TextButton(
+          child: Text(ButtonLabel.LOGOUT),
+          onPressed: () {
+            authentication.signOut();
+            Navigator.pushNamedAndRemoveUntil(
+                context, Paths.PATH_LOGIN, (_) => false);
           },
         ),
       ],
