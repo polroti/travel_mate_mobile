@@ -22,9 +22,9 @@ class Authentication implements BaseAuth {
   }
 
   @override
-  Future<User> getCurrentUser() {
-    // TODO: implement getCurrentUser
-    throw UnimplementedError();
+  Future<User> getCurrentUser() async {
+    User user = this._firebaseAuth.currentUser;
+    return user;
   }
 
   @override
@@ -35,8 +35,7 @@ class Authentication implements BaseAuth {
 
   @override
   Future<void> signOut() {
-    // TODO: implement signOut
-    throw UnimplementedError();
+    this._firebaseAuth.signOut();
   }
 
   Future<String> signUp(
