@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
@@ -21,6 +22,13 @@ List anotherNikan = [
 ];
 
 class _PastTripsPageState extends State<PastTripsPage> {
+  final Stream<QuerySnapshot> _pastTripsStream = FirebaseFirestore.instance
+      .collection('users')
+      .doc()
+      .collection('pastTrips')
+      .orderBy('date', descending: true)
+      .snapshots();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
