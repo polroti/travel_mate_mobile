@@ -171,10 +171,6 @@ class _RegisterPageState extends State<RegisterPage> {
                           })
                       .catchError((err) => print(err)))
                   .catchError((error) {
-                print("==============================");
-                print("Error code " + error.code);
-                print("==============================");
-
                 switch (error.code) {
                   case FirebaseAuthExceptions.EMAIL_ALREADY_IN_USE:
                     final snackBar = SnackBar(
