@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:travel_mate_mobile/constants/AppBarTitleConstants.dart';
 import 'package:travel_mate_mobile/constants/ButtonConstants.dart';
 import 'package:travel_mate_mobile/constants/ErrorConstants.dart';
@@ -11,7 +10,6 @@ import 'package:travel_mate_mobile/constants/PathConstants.dart';
 import 'package:travel_mate_mobile/constants/RegExp.dart';
 import 'package:travel_mate_mobile/constants/TextInputConstants.dart';
 import 'package:travel_mate_mobile/screens/home/bottomNavBarContainer.dart';
-import 'package:travel_mate_mobile/screens/home/home.dart';
 
 class LoginPage extends StatefulWidget {
   LoginPage({Key key}) : super(key: key);
@@ -139,9 +137,8 @@ class _LoginPageState extends State<LoginPage> {
                           builder: (context) => BottomNavigationContainer())))
                   .catchError((err) => print(err)))
               .catchError((error) {
-            print("==============================");
             print("Error code " + error.code);
-            print("==============================");
+
             switch (error.code) {
               case FirebaseAuthExceptions.INCORRECT_PASSWORD:
                 final snackBar = SnackBar(

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+import 'package:travel_mate_mobile/constants/AppBarTitleConstants.dart';
 
 class AccountPage extends StatefulWidget {
   AccountPage({
@@ -15,7 +15,7 @@ class _AccountPageState extends State<AccountPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Account"),
+        title: Text(AppBarTitles.ACCOUNT),
       ),
       floatingActionButton: FloatingActionButton.extended(
         label: Text(

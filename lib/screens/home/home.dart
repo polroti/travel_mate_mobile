@@ -1,6 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:pretty_qr_code/pretty_qr_code.dart';
 import 'package:travel_mate_mobile/constants/AppBarTitleConstants.dart';
 import 'package:travel_mate_mobile/constants/ButtonConstants.dart';

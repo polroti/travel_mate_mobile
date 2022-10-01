@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:travel_mate_mobile/screens/account/account.dart';
 import 'package:travel_mate_mobile/screens/auth/login.dart';
-import 'package:travel_mate_mobile/screens/auth/register.dart';
 import 'package:travel_mate_mobile/screens/home/home.dart';
 import 'package:travel_mate_mobile/screens/pastTrips/pastTrips.dart';
 
